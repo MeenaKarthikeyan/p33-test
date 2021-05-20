@@ -6,7 +6,7 @@ const Constraint = Matter.Constraint;
 var engine, world;
 var backgroundImg, snow ;
 
-
+var snowParticles = [];
 
 function preload() {
   backgroundImg=loadImage("snow3.jpg")
@@ -14,14 +14,23 @@ function preload() {
 
 function setup() {
   createCanvas(800,400);
-  createSprite(400, 200, 50, 50);
-  snow = new Snow(400, 350);
+  engine = Engine.create();
+	world = engine.world;
+  //createSprite(400, 200, 50, 50);
+  snow = new Snow(400, 350, 10);
+  Engine.run(engine)
 }
 
 function draw() {
-  if(backgroundImg)
+  //if(backgroundImg)
   background(backgroundImg);
+  if (frameCount%10===0){
   
-  snow.display();
+    snowParticles.push(new Snow(random(10,770),10,10));
+  }
+  for (var j = 0; j < snowParticles.length; j++) {
+    snowParticles[j].display();
+  }
+ 
   drawSprites();
 }
